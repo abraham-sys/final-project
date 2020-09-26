@@ -1,120 +1,96 @@
-let inputBaru1 = document.createElement("input");
-inputBaru1.type = "number";
-inputBaru1.setAttribute("id", "input-1");
+const sizeInputShape = document.querySelector("#size-input");
+const shapeMaker = document.querySelector("#shape-maker");
 
-let inputBaru2 = document.createElement("input");
-inputBaru2.type = "number";
-inputBaru2.setAttribute("id", "input-2");
+const circle = document.getElementById("circle");
+const triangle = document.getElementById("triangle");
+const rectangle = document.getElementById("rectangle");
 
-let inputBaru3 = document.createElement("input");
-inputBaru3.type = "submit";
-inputBaru3.value = "gambar!";
-inputBaru3.setAttribute("id", "input-3");
+circle.addEventListener("click", function () {
+  sizeInputShape.innerHTML = `<p>Diameter: <input id="diameter" type="number" min="1"> <input id="gambar" type="submit" value="gambar!"></p>`;
 
-let output = "";
+  const gambar = document.getElementById("gambar");
 
-document.getElementById("circle").onclick = instructionCircle;
+  gambar.addEventListener("click", function () {
+    const diameter = document.getElementById("diameter").value;
 
-function instructionCircle() {
-  document.getElementById("instruct").innerHTML =
-    "You chose circle! Next, input this number so we can draw it out for you:";
+    shapeMaker.style.margin = "50px auto";
+    shapeMaker.style.border = "none";
+    shapeMaker.style.backgroundColor = "#32e0c4";
+    shapeMaker.style.width = `${diameter * 100}px`;
+    shapeMaker.style.height = `${diameter * 100}px`;
+    shapeMaker.style.borderRadius = "50%";
+    shapeMaker.animate(
+      [
+        { width: "0", height: "0" },
+        { width: `${diameter * 100}px`, height: `${diameter * 100}px` },
+      ],
+      {
+        duration: 2000,
+      }
+    );
+  });
+});
 
-  document.getElementById("p-1").innerHTML = "Diameter: ";
-  document.getElementById("p-1").appendChild(inputBaru1);
-  document.getElementById("p-1").appendChild(inputBaru3);
+triangle.addEventListener("click", function () {
+  sizeInputShape.innerHTML = `<p>Alas: <input id="alas" type="number" min="1"> Tinggi: <input id="tinggi" type="number" min="1"> <input id="gambar" type="submit" value="gambar!"></p>`;
 
-  output = "circle";
-}
+  const gambar = document.getElementById("gambar");
 
-document.getElementById("triangle").onclick = instructionTriangle;
+  gambar.addEventListener("click", function () {
+    const alas = document.getElementById("alas").value;
+    const tinggi = document.getElementById("tinggi").value;
 
-function instructionTriangle() {
-  document.getElementById("instruct").innerHTML =
-    "You chose triangle! Next, input these numbers so we can draw it out for you:";
+    shapeMaker.style.borderRadius = "0";
+    shapeMaker.style.margin = "50px auto";
+    shapeMaker.style.width = "0";
+    shapeMaker.style.height = "0";
+    shapeMaker.style.backgroundColor = "white";
+    shapeMaker.style.borderBottom = `${alas * 100}px solid #F2E86D`;
+    shapeMaker.style.borderLeft = `${tinggi * 50}px solid transparent`;
+    shapeMaker.style.borderRight = `${tinggi * 50}px solid transparent`;
+    shapeMaker.animate(
+      [
+        {
+          borderLeft: "0px solid transparent",
+          borderRight: "0px solid transparent",
+          borderBottom: "0px solid #F2E86D",
+        },
+        {
+          borderLeft: `${tinggi * 50}px solid transparent`,
+          borderRight: `${tinggi * 50}px solid transparent`,
+          borderBottom: `${alas * 100}px solid #F2E86D`,
+        },
+      ],
+      {
+        duration: 2000,
+      }
+    );
+  });
+});
 
-  document.getElementById("p-1").innerHTML = "Alas: ";
-  document.getElementById("p-1").appendChild(inputBaru1);
+rectangle.addEventListener("click", function () {
+  sizeInputShape.innerHTML = `<p>Panjang: <input id="panjang" type="number" min="1"> Lebar: <input id="lebar" type="number" min="1"> <input id="gambar" type="submit" value="gambar!"></p>`;
 
-  document.getElementById("p-2").innerHTML = "Tinggi: ";
-  document.getElementById("p-2").appendChild(inputBaru2);
-  document.getElementById("p-2").appendChild(inputBaru3);
+  const gambar = document.getElementById("gambar");
 
-  output = "triangle";
-}
+  gambar.addEventListener("click", function () {
+    const panjang = document.getElementById("panjang").value;
+    const lebar = document.getElementById("lebar").value;
 
-document.getElementById("rectangle").onclick = instructionRectangle;
-
-function instructionRectangle() {
-  document.getElementById("instruct").innerHTML =
-    "You chose rectangle! Next, input these numbers so we can draw it out for you:";
-
-  document.getElementById("p-1").innerHTML = "Panjang: ";
-  document.getElementById("p-1").appendChild(inputBaru1);
-
-  document.getElementById("p-2").innerHTML = "Lebar: ";
-  document.getElementById("p-2").appendChild(inputBaru2);
-  document.getElementById("p-2").appendChild(inputBaru3);
-
-  output = "rectangle";
-}
-
-if (output === "circle") {
-  document.getElementById("input-3").onclick = gambarLingkaran;
-
-  function gambarLingkaran() {
-    let diameter = document.getElementById("input-1").value;
-
-    let circum = diameter * 100;
-
-    document.getElementById("display-shape").style.width = `${circum}px`;
-    document.getElementById("display-shape").style.height = `${circum}px`;
-
-    document.getElementById("shape").style.backgroundColor = "white";
-    document.getElementById("shape").style.border = "thick solid red";
-    document.getElementById("shape").style.animation = "animate 4s 2";
-    document.getElementById("shape").style.borderRadius = "50%";
-  }
-} else if (output === "triangle") {
-  document.getElementById("input-3").onclick = gambarSegitiga;
-
-  function gambarSegitiga() {
-    let alas = document.getElementById("input-1").value;
-    let tinggi = document.getElementById("input-2").value;
-
-    let hitungan;
-
-    if (alas > tinggi) hitungan = Math.ceil(alas / tinggi);
-    else hitungan = Math.ceil(tinggi / alas);
-
-    let circum = hitungan * 100;
-
-    document.getElementById("display-shape").style.width = `${circum}px`;
-    document.getElementById("display-shape").style.height = `${circum}px`;
-
-    document.getElementById("shape").style.backgroundColor = "white";
-    document.getElementById("shape").style.border = "thick solid red";
-    document.getElementById("shape").style.animation =
-      "animate 4s linear forwards";
-  }
-} else if (output === "rectangle") {
-  document.getElementById("input-3").onclick = gambarRectangle;
-
-  function gambarRectangle() {
-    let panjang = document.getElementById("input-1").value;
-    let lebar = document.getElementById("input-2").value;
-
-    let hitungan;
-
-    if (panjang > lebar) hitungan = Math.ceil(panjang / lebar);
-    else hitungan = Math.ceil(lebar / panjang);
-
-    let circum = hitungan * 100;
-
-    document.getElementById("display-shape").style.width = `${circum}px`;
-    document.getElementById("display-shape").style.height = `${circum}px`;
-
-    document.getElementById("shape").style.backgroundColor = "white";
-    document.getElementById("shape").style.border = "thick solid red";
-    document.getElementById("shape").style.animation = "animate 4s 2";
-  }
-}
+    shapeMaker.style.margin = "50px auto";
+    shapeMaker.style.border = "none";
+    shapeMaker.style.backgroundColor = "#a2d5f2";
+    shapeMaker.style.width = `${panjang * 100}px`;
+    shapeMaker.style.height = `${lebar * 100}px`;
+    shapeMaker.style.borderRadius = "0";
+    shapeMaker.animate(
+      [
+        { width: "0", height: "0" },
+        { width: `${panjang * 100}px`, height: `${lebar * 100}px` },
+      ],
+      {
+        duration: 2000,
+      }
+    );
+  });
+});
